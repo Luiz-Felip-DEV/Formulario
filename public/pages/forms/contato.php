@@ -3,11 +3,9 @@
     require_once "../../../bootstrap.php";
 
     if (isEmpty()){
-        // flash('message', 'Preencha todos os campos');
+        flash('message', 'Preencha todos os campos');
 
-        // return redirect('?page=contato');
-
-        dd('Preencha todos os campos!');
+        return redirect("contato");
     }
 
     $validate = validate([

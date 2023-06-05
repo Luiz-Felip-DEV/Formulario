@@ -1,7 +1,7 @@
 <?php 
 
     function dd($dump){
-        var_dump($dump);
+        print_r($dump);
         die();
     }
 
@@ -14,6 +14,14 @@
         }
 
         return $_GET;
+    }
+
+    function redirect($target){
+        return header("location:/?page={$target}");
+    }
+
+    function redirectHome(){
+        return header("location:/");
     }
 
 ?>
