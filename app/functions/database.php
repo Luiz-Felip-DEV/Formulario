@@ -36,20 +36,26 @@ use PDO;
         return $list->fetchAll();
     }
 
-    function update($table, $fields){
+    function update($table, $fields, $where){
 
         if (!is_array($fields)){
             $fields = (array) $fields;
         }
         $pdo = connect();
 
-        $fields = array_map(function ($field){
+        $data = array_map(function ($field){
             return "{$field} = :{$field} ";
         }, array_keys($fields));
-        $sql = "update {$table} set ";
-        $sql .= implode(',', $fields);
 
-        dd($sql);
+        $sql = "update {$table} set ";
+        $sql .= implode(',', $data);
+        $sql .= " where {$where[0]} = :{$where[0]}";
+
+        $data = array_merge($fields, [$where[0] => $where[1]]);
+
+        $update = $pdo->prepare($sql);
+        $update->execute($data);
+        return $update->rowCount();
     }
 
     function find($table, $field, $value){
@@ -66,8 +72,15 @@ use PDO;
           return $find->fetch();
     }
 
-    function delete(){
+    function delete($table, $field, $value){
+        $pdo = connect();
 
+        $sql = "delete from {$table} where {$field} = {$value}";
+
+        $delete = $pdo->prepare($sql);
+        // $delete->bindValue($field, $value);
+
+        return $delete->execute();
     }
 
 ?>

@@ -2,6 +2,7 @@
 
 <h2>Pagina Inicial</h2>
 
+<?= get('message');?>
 <table class="table table-striped table-hover">
     <thead>
         <tr>
@@ -30,7 +31,7 @@
             </td>
 
             <td>
-                <a href="" class="btn btn-danger">Deletar</a>
+                <a href="?page=delete_user&id=<?=$user->id;?>" class="btn btn-danger">Deletar</a>
             </td>
 
         </tr>
